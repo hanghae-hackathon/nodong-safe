@@ -6,7 +6,6 @@
     "lint": "bunx eslint .",
     "fix": "bunx eslint . --fix",
     "dev": "bun --watch src/app.ts",
-    "build": "NODE_ENV=production bun-vercel ./src/app.ts",
     "start": "NODE_ENV=production bun src/app.ts",
     "prepare": "husky || exit 0"
   },
