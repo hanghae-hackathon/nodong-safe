@@ -3,10 +3,9 @@
   "module": "src/app.ts",
   "type": "module",
   "scripts": {
-    "lint": "bunx eslint . --ignore-pattern dist/app.js",
-    "fix": "bunx eslint . --fix --ignore-pattern dist/app.js",
+    "lint": "bunx eslint .",
+    "fix": "bunx eslint .",
     "dev": "bun --watch src/app.ts",
-    "build": "bun build src/app.ts --outdir dist --target node",
     "start": "NODE_ENV=production bun src/app.ts",
     "prepare": "husky || exit 0"
   },
