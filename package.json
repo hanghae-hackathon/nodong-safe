@@ -6,14 +6,15 @@
     "lint": "bunx eslint .",
     "fix": "bunx eslint . --fix",
     "dev": "bun --watch src/app.ts",
+    "build": "NODE_ENV=production bun-vercel ./src/app.ts",
     "start": "NODE_ENV=production bun src/app.ts",
     "prepare": "husky || exit 0"
   },
   "devDependencies": {
     "@eslint/js": "^9.3.0",
     "@types/bun": "latest",
-    "@types/mongoose": "^5.11.97",
     "@types/react": "^18.3.3",
+    "bun-vercel": "1.0.0-alpha.5",
     "dotenv": "^16.4.5",
     "eslint": "^9.3.0",
     "eslint-config-prettier": "^9.1.0",
