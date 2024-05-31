@@ -1,41 +1,33 @@
 {
-  "name": "bun-playground",
-  "module": "src/app.ts",
+  "name": "nodong-safe",
+  "private": true,
+  "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "build": "tsc && vite build",
     "lint": "bunx eslint .",
-    "fix": "bunx eslint .",
-    "dev": "bun --watch src/app.ts",
-    "start": "NODE_ENV=production bun src/app.ts",
-    "prepare": "husky || exit 0"
+    "fix": "bunx eslint . --fix"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.3.0",
-    "@types/bun": "latest",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
-    "@vercel/node": "^3.1.6",
-    "dotenv": "^16.4.5",
+    "@types/react": "^18.2.66",
+    "@types/react-dom": "^18.2.22",
+    "@typescript-eslint/eslint-plugin": "^7.2.0",
+    "@typescript-eslint/parser": "^7.2.0",
+    "@vitejs/plugin-react": "^4.2.1",
     "eslint": "^9.3.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",
-    "globals": "^15.2.0",
-    "husky": "^9.0.11",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.6",
+    "globals": "^15.3.0",
     "prettier": "^3.2.5",
-    "typescript-eslint": "^7.9.0"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
-  },
-  "dependencies": {
-    "@elysiajs/eden": "^1.0.14",
-    "@elysiajs/html": "^1.0.2",
-    "@elysiajs/node": "^0.0.0-alpha.0",
-    "elysia": "^1.0.22",
-    "mongodb": "^6.7.0",
-    "mongoose": "^8.4.0",
-    "openai": "^4.47.2",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "typescript": "^5.2.2",
+    "typescript-eslint": "^7.11.0",
+    "vite": "^5.2.0"
   }
 }
