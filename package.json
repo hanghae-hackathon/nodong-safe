@@ -3,9 +3,10 @@
   "module": "src/app.ts",
   "type": "module",
   "scripts": {
-    "lint": "bunx eslint .",
-    "fix": "bunx eslint . --fix",
+    "lint": "bunx eslint . --ignore-pattern dist/app.js",
+    "fix": "bunx eslint . --fix --ignore-pattern dist/app.js",
     "dev": "bun --watch src/app.ts",
+    "build": "bun build src/app.ts --outdir dist --target node",
     "start": "NODE_ENV=production bun src/app.ts",
     "prepare": "husky || exit 0"
   },
@@ -27,6 +28,7 @@
   },
   "dependencies": {
     "@elysiajs/html": "^1.0.2",
+    "@elysiajs/node": "^0.0.0-alpha.0",
     "elysia": "^1.0.22",
     "mongodb": "^6.7.0",
     "mongoose": "^8.4.0",
