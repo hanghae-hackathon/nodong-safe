@@ -15,7 +15,6 @@ export const EchoController = <Path extends string>(config: { prefix: Path }) =>
       }),
     })
     .decorate('Service', new EchoService(new EchoRepository()))
-    .get('/echo/:_id', ({ params: { _id }, Service }) =>
     .get('/:_id', ({ params: { _id }, Service }) =>
       Service.findOne(new mongoose.Types.ObjectId(_id)),
     )
