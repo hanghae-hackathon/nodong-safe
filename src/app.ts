@@ -5,7 +5,7 @@ import { connectMongo } from './infra/connect.mongo.ts'
 
 import 'dotenv'
 
-const APP_PORT = Number(process.env.APP_PORT ?? 3000)
+const APP_PORT = Number(process.env.APP_PORT ?? 80)
 
 await connectMongo(
   process.env.DB_CONNECTION_STRING as string,

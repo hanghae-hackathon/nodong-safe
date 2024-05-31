@@ -7,6 +7,6 @@ COPY src ./src
 
 RUN bun install
 
-EXPOSE 3000
+EXPOSE 80
 
 CMD bun run start
