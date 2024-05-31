@@ -12,10 +12,12 @@ await connectMongo(
   process.env.DB_NAME as string,
 )
 
-new Elysia()
+const app = new Elysia()
   .use(html())
   .use(EchoController({ prefix: '/echo' }))
   .get('/', () => 'Hello Elysia')
   .listen(APP_PORT, () => {
     console.log(`App is running on http://localhost:${APP_PORT}`)
   })
+
+export type App = typeof app

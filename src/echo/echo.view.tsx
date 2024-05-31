@@ -1,6 +1,6 @@
-import { genHtml } from '../shared/gen.html.tsx'
+import { wrapHtml } from '../shared/wrap.html.tsx'
 
-export const EchoView = genHtml(() => {
+export const EchoView = wrapHtml(() => {
   return (
     <form method={'post'}>
       <input name={'message'} placeholder={'메세지를 입력하세요'} />

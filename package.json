@@ -27,6 +27,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "@elysiajs/eden": "^1.0.14",
     "@elysiajs/html": "^1.0.2",
     "@elysiajs/node": "^0.0.0-alpha.0",
     "elysia": "^1.0.22",
