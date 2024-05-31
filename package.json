@@ -5,11 +5,18 @@
   "type": "module",
   "scripts": {
     "build": "tsc && vite build",
+    "dev": "bun run build && bun --watch src/app.ts",
     "lint": "bunx eslint . --ignore-pattern 'dist/*'",
     "fix": "bunx eslint . --fix --ignore-pattern 'dist/*'",
+    "start": "bun run build && NODE_ENV=production bun src/app.ts",
     "prepare": "husky || exit 0"
   },
   "dependencies": {
+    "@elysiajs/static": "^1.0.3",
+    "dotenv": "^16.4.5",
+    "elysia": "^1.0.22",
+    "mongoose": "^8.4.1",
+    "openai": "^4.47.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
