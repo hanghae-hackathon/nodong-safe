@@ -16,3 +16,102 @@ https://www.figma.com/design/9fRigTXnACQud4qYz0wYAG/Untitled?node-id=0-1&t=5DWso
 4. 특정 시점에 채팅창 아래에 ('근처 노무 법인 조회하기') 라는 버튼이 떠오른다.
 5. 누르면 법무법인 마커가 표시된 지도가 나온다.
 6. 상담 내용은 MongoDB에 저장된다.
+
+## Schema 설계
+
+```ts
+interface Session {
+  _id: ObjectId
+  image: Blob
+  conversations: {
+    who: ObjectId | 'Bot'
+    content: string
+    createdAt: Date
+  }[]
+  createdAt: Date
+}
+```
+
+## API 설계
+
+prefix: /api
+
+### 세션 열기
+
+#### 요청
+
+```
+POST /sessions
+Content-Type: multipart/form-data
+
+who: string(ObjectId)
+image: blob
+```
+
+#### 응답
+
+```
+Status: 201 Created
+Content-Type: application/json
+
+{
+  session_id: string
+  openingMent: string // "안녕하세요. 반갑습니다! 현재 근로 계약 상황에 대해 더 자세하게 설명해주세요."
+}
+```
+
+### 대화 보내기 / 받기
+
+#### 요청
+
+```
+POST /sessions/:session_id
+Content-Type: application/json
+
+{
+  who: string(ObjectId)
+  content: string
+}
+```
+
+#### 응답
+
+```
+Status: 201 OK
+Content-Type: application/json
+
+{
+  response: string
+  createdAt: Date
+}
+```
+
+### 노무 법인 위치 요청
+
+#### 요청
+
+```
+GET /companies?query=선릉역
+
+```
+
+#### 응답
+
+```
+{
+  companies: {
+    pros: string
+    call: string
+    address: string
+  }
+}
+```
+
+## Route 설계
+
+prefix: /pages
+
+/로 들어오면 /chat으로 redirection
+
+- /chat: 채팅 화면
+- /map: 지도 화면
