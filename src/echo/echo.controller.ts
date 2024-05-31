@@ -30,7 +30,7 @@ export const EchoController = <Path extends string>(config: { prefix: Path }) =>
           OpenapiView({
             response:
               completion?.choices.at(0)?.message.content ?? '응답이 없습니다.',
-          }),
+          })(),
         ),
       {
         body: 'openai',
