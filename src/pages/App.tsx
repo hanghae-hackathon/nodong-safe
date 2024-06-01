@@ -67,7 +67,7 @@ function App() {
     setConversations(conversation => [
       ...conversation,
       {
-        me: true,
+        me: false,
         content: data.response.toString(),
       },
     ])
