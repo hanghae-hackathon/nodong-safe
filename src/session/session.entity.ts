@@ -16,16 +16,32 @@ export interface IChat {
 export type PartialSession = Partial<ISession> & { image: Blob }
 export type PartialChat = Partial<IChat>
 
-export const ChatSchema = new mongoose.Schema<IChat>({
-  author: { type: mongoose.SchemaTypes.ObjectId, required: true },
-  content: { type: String, required: true },
-  createdAt: { type: Date, required: true },
-})
+export const ChatSchema = new mongoose.Schema<IChat>(
+  {
+    author: { type: mongoose.SchemaTypes.ObjectId, required: true },
+    content: { type: String, required: true },
+  },
+  {
+    timestamps: { createdAt: true },
+  },
+)
 
-export const SessionSchema = new mongoose.Schema<ISession>({
-  conversations: { type: [ChatSchema], required: true },
-  image: { type: Buffer, required: true },
-  createdAt: { type: Date, required: true },
+ChatSchema.set('toObject', { versionKey: false })
+
+export const SessionSchema = new mongoose.Schema<ISession>(
+  {
+    conversations: { type: [ChatSchema], required: true },
+    image: { type: Buffer, required: true },
+  },
+  { timestamps: { createdAt: true } },
+)
+
+SessionSchema.set('toObject', {
+  versionKey: false,
+  transform: (_, ret) => {
+    const { image, ...rest } = ret
+    return rest
+  },
 })
 
 export const SessionEntity = mongoose.model<ISession>('Session', SessionSchema)

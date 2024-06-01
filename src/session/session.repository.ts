@@ -9,15 +9,16 @@ export class SessionRepository {
   async save(session: PartialSession) {
     const imageBuffer = await this.blobToBuffer(session.image)
     return new SessionEntity({
+      ...session,
       image: imageBuffer,
-      createdAt: new Date(),
     }).save()
   }
 
   updateOne(_id: mongoose.Types.ObjectId, body: PartialChat) {
-    return SessionEntity.updateOne(
+    return SessionEntity.findOneAndUpdate(
       { _id },
-      { conversations: { $push: { ...body, createdAt: new Date() } } },
+      { conversations: { $push: body } },
+      { new: true },
     )
   }
 
