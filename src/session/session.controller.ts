@@ -41,9 +41,9 @@ export const SessionController = <Path extends string>(config: {
             return error(400, 'Bad Request')
           }
 
-          const message = await Service.sendMessage(body.content)
+          // const message = await Service.sendMessage(body.content)
           return {
-            response: message.choices.at(0)?.message ?? '',
+            response: '',
             createdAt: r!.createdAt,
           }
         }),
@@ -53,10 +53,14 @@ export const SessionController = <Path extends string>(config: {
     )
     .post(
       '/',
-      async ({ body, Service }) =>
+      async ({ body, error, Service }) =>
         Service.save(body).then(async r => {
-          const message = await Service.sendMessage(
-            `
+          console.log('create thread')
+
+          const thread = await Service.createThread(r._id)
+          await Service.addThreadMessage(r._id, {
+            role: 'user',
+            content: `
             1. Introduce yourself as an AI and greet warmly.
             2. Carefully categorize the contents of the employment contract or related documents uploaded by the user.
             3. Thoroughly categorize the concerns contained in the text sent by the user.
@@ -65,11 +69,43 @@ export const SessionController = <Path extends string>(config: {
             6. If any violations are found, provide advice.
             7. Speak in korean.
             `.trim(),
+          })
+
+          console.log('list assistants')
+
+          const list = await Service.findAssistantAll()
+          const assistant = Service.findAssistantOne(
+            'asst_ndxhvEliIE6nHhfV26EKmEdR',
+            list,
           )
+
+          if (!assistant) {
+            return error(400, 'Invalid Assistant')
+          }
+
+          console.log('run assistant', assistant.id)
+
+          const run = await Service.runAssistant(thread.threadId, assistant.id)
+
+          console.log('wait assistant', thread.threadId, run.id)
+
+          await Service.waitAssistantRunning(thread.threadId, run.id)
+
+          console.log('list message')
+
+          const messagePage = await Service.findMessagesAll(thread.threadId)
+
+          const openingMent: string[] = []
+          messagePage.data.forEach(message => {
+            console.log('got message', message.content)
+            openingMent.push(message.content.join(''))
+          })
+
+          console.log('job done')
 
           return {
             session_id: r.id,
-            openingMent: message.choices.at(0)?.message ?? '',
+            openingMent: openingMent.join(''),
           }
         }),
       {

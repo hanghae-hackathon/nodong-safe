@@ -18,11 +18,7 @@ export class OpenAiService {
     })
   }
 
-  createThread() {
-    return openai.beta.threads.create()
-  }
-
-  sendThreadMessage(
+  addThreadMessage(
     threadId: string,
     params: { content: string; role: 'user' | 'assistant'; image?: Buffer },
   ) {
@@ -32,11 +28,54 @@ export class OpenAiService {
     })
   }
 
+  createThread() {
+    return openai.beta.threads.create()
+  }
+
   saveThread(sessionId: mongoose.Types.ObjectId, threadId: string) {
     return this.openAiThreadRepository.save(sessionId, threadId)
   }
 
   findThreadOne(sessionId: mongoose.Types.ObjectId) {
     return this.openAiThreadRepository.findOne(sessionId)
+  }
+
+  findAssistantsAll() {
+    return openai.beta.assistants.list()
+  }
+
+  findAssistantOne(
+    id: string,
+    list: Awaited<ReturnType<typeof openai.beta.assistants.list>>,
+  ) {
+    return list.data.find(assistant => assistant.id === id)
+  }
+
+  runAssistant(threadId: string, assistantId: string) {
+    return openai.beta.threads.runs.create(threadId, {
+      assistant_id: assistantId,
+    })
+  }
+
+  retrieveThreadRun(threadId: string, runId: string) {
+    return openai.beta.threads.runs.retrieve(threadId, runId)
+  }
+
+  pollThreadRun(threadId: string, runId: string) {
+    return new Promise(resolve => {
+      this.retrieveThreadRun(threadId, runId).then(runObject => {
+        const polling: ReturnType<typeof setInterval> = setInterval(() => {
+          console.log('status:', runObject.status)
+          if (runObject.status === 'completed') {
+            clearInterval(polling)
+            resolve(true)
+          }
+        }, 1000)
+      })
+    })
+  }
+
+  findMessagesAll(threadId: string) {
+    return openai.beta.threads.messages.list(threadId)
   }
 }

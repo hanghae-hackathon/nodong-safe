@@ -22,16 +22,35 @@ export class SessionService {
     return this.openaiService.saveThread(sessionId, thread.id)
   }
 
-  async sendThreadMessage(
+  findAssistantAll() {
+    return this.openaiService.findAssistantsAll()
+  }
+
+  findAssistantOne(
+    assistantId: string,
+    list: Awaited<ReturnType<typeof this.findAssistantAll>>,
+  ) {
+    return this.openaiService.findAssistantOne(assistantId, list)
+  }
+
+  runAssistant(threadId: string, assistantId: string) {
+    return this.openaiService.runAssistant(threadId, assistantId)
+  }
+
+  async addThreadMessage(
     sessionId: mongoose.Types.ObjectId,
     params: { content: string; role: 'user' | 'assistant'; image?: Buffer },
   ) {
     const threadInfo = await this.openaiService.findThreadOne(sessionId).exec()
     if (!threadInfo) return null
-    return this.openaiService.sendThreadMessage(threadInfo.threadId, params)
+    return this.openaiService.addThreadMessage(threadInfo.threadId, params)
   }
 
-  sendMessage(content: string) {
-    return this.openaiService.chat(content, 'asst_hWVrfYW3ro1AssJVX8StKgqZ')
+  async waitAssistantRunning(threadId: string, runId: string) {
+    return this.openaiService.pollThreadRun(threadId, runId)
+  }
+
+  findMessagesAll(threadId: string) {
+    return this.openaiService.findMessagesAll(threadId)
   }
 }
