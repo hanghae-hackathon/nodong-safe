@@ -1,5 +1,4 @@
 import { FormEventHandler, useState } from 'react'
-import './App.css'
 
 function App() {
   const [conversations, setConversations] = useState<
@@ -76,6 +75,9 @@ function App() {
 
   return (
     <section>
+      <header>
+        <h1>데모 앱</h1>
+      </header>
       <main>
         <form encType={'multipart/form-data'} onSubmit={createSession}>
           <input type={'file'} name={'image'} />

@@ -45,7 +45,6 @@ export const SessionController = <Path extends string>(config: {
       '/',
       ({ body, Service }) =>
         Service.save(body).then(r => {
-          console.log(r)
           return {
             session_id: r.id,
             // @todo variation
