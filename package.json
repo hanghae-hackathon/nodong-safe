@@ -12,9 +12,11 @@
     "prepare": "husky || exit 0"
   },
   "dependencies": {
+    "@elysiajs/eden": "^1.0.14",
     "@elysiajs/static": "^1.0.3",
     "dotenv": "^16.4.5",
     "elysia": "^1.0.22",
+    "fetch-blob": "^4.0.0",
     "mongoose": "^8.4.1",
     "openai": "^4.47.3",
     "react": "^18.2.0",

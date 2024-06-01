@@ -4,6 +4,7 @@ import { connectMongo } from './infra/connect.mongo.ts'
 
 import 'dotenv'
 import staticPlugin from '@elysiajs/static'
+import { SessionController } from './session/session.controller.ts'
 
 const APP_PORT = Number(process.env.APP_PORT ?? 80)
 
@@ -16,6 +17,7 @@ const app = new Elysia()
   .use(staticPlugin({ assets: 'dist', prefix: '/pages' }))
   .use(staticPlugin({ assets: 'public', prefix: '/public' }))
   .use(EchoController({ prefix: '/echo' }))
+  .use(SessionController({ prefix: '/sessions' }))
   .get('/', () => 'Hello Elysia')
   .listen(APP_PORT, () => {
     console.log(`App is running on http://localhost:${APP_PORT}`)
