@@ -115,3 +115,9 @@ prefix: /pages
 
 - /chat: 채팅 화면
 - /map: 지도 화면
+
+## GPT-4o VS Nodo AI 비교
+
+![Screenshot 2024-06-01 at 15.26.23.png](assets%2FScreenshot%202024-06-01%20at%2015.26.23.png)
+
+![Screenshot 2024-06-01 at 15.26.52.png](assets%2FScreenshot%202024-06-01%20at%2015.26.52.png)
