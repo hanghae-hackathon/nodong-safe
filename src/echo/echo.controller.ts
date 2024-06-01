@@ -3,6 +3,7 @@ import { EchoService } from './echo.service.ts'
 import { EchoRepository } from './echo.repository.ts'
 import * as mongoose from 'mongoose'
 import { OpenAiService } from '../openai/openai.service.ts'
+import { OpenaiThreadRepository } from '../openai/openai.thread.repository.ts'
 
 export const EchoController = <Path extends string>(config: { prefix: Path }) =>
   new Elysia({
@@ -20,7 +21,7 @@ export const EchoController = <Path extends string>(config: { prefix: Path }) =>
       }),
     })
     .decorate('EchoService', new EchoService(new EchoRepository()))
-    .decorate('OpenAiService', new OpenAiService())
+    .decorate('OpenAiService', new OpenAiService(new OpenaiThreadRepository()))
     .post(
       '/openai',
       ({ body, OpenAiService }) => OpenAiService.chat(body.chat),
